@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "GEHVDYAxuc/EevPRNf3cMPp3KF98JCkBwu4M/g10n8H0NML6zK3V/lRRctnWR9JrQfH2KB4pd/wsqGNIHYcjHw==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Gabriele\\Desktop\\Progetti\\MQTTAppGUI\\MQTTAppGUI\\MQTTAppGUI.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Gabriele\\.nuget\\packages\\mqttnet\\3.1.2\\mqttnet.3.1.2.nupkg.sha512"
+  ],
+  "logs": []
+}

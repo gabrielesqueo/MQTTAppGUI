@@ -10,16 +10,17 @@ namespace MQTTAppGUI
         public Form1()
         {
             InitializeComponent();
+            Shown += Form1_Shown;
         }
 
         public void Form1_Load(object sender, EventArgs e)
         {
             
         }
-        
-        private void Form1_Activated(object sender, System.EventArgs e)
+
+        private void Form1_Shown(Object sender, EventArgs e)
         {
-            
+            MessageBox.Show("ciao");
         }
 
 
