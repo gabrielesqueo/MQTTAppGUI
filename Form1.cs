@@ -1,4 +1,7 @@
-using System.Threading.Tasks;
+using System.Text;
+using System;
+using System.ComponentModel;
+using System.Windows.Forms;
 using MQTTnet;
 using MQTTnet.Client;
 using MQTTnet.Client.Options;
@@ -7,35 +10,18 @@ namespace MQTTAppGUI
 {
     public partial class Form1 : Form
     {
+        IMqttClient _Client = null;
         public Form1()
         {
             InitializeComponent();
-            Shown += Form1_Shown;
         }
 
         public void Form1_Load(object sender, EventArgs e)
         {
-            
-        }
-
-        private void Form1_Shown(Object sender, EventArgs e)
-        {
-            MessageBox.Show("ciao");
-        }
-
-
-        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
             var factory = new MqttFactory();
-            var _Client = factory.CreateMqttClient();
+            _Client = factory.CreateMqttClient();
             string clientid = Guid.NewGuid().ToString();
 
-            Console.WriteLine("Confiruando Opzioni...");
             //Configurazione Opzioni
             var _options = new MqttClientOptionsBuilder()
                 .WithClientId(clientid)
@@ -47,17 +33,56 @@ namespace MQTTAppGUI
             //Connessione
             _Client.ConnectAsync(_options).Wait();
 
-            Console.WriteLine("Pubblicando Messaggio...");
+            var mqttSubscribeOptions = factory.CreateSubscribeOptionsBuilder()
+                               .WithTopicFilter(f => { f.WithTopic("panetti/topic"); })
+                               .Build();
 
+            _Client.SubscribeAsync(mqttSubscribeOptions).Wait();
+        }
+
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+         
             //Pubblicazione Messaggio
             var applicationMessage = new MqttApplicationMessageBuilder()
-               .WithTopic("panetti/test")
+               .WithTopic("panetti/topic")
                .WithPayload(textBox1.Text)
                .Build();
 
             _Client.PublishAsync(applicationMessage, CancellationToken.None);
-            
+           
             textBox1.ResetText();
+            
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+
+            //Lettura Messaggi
+            _Client.UseApplicationMessageReceivedHandler(e =>
+            {
+                try
+                {
+                    string topic = e.ApplicationMessage.Topic;
+
+                    if (string.IsNullOrWhiteSpace(topic) == false)
+                    {
+                        string payload = Encoding.UTF8.GetString(e.ApplicationMessage.Payload);
+                        //Da completare
+                        MessageBox.Show($"Topic: {topic}. Message Received: {payload}");
+                        
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message, ex);
+                }
+            });
             
         }
     }

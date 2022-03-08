@@ -28,11 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.button1 = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // textBox1
@@ -51,11 +53,10 @@
             this.label1.Size = new System.Drawing.Size(121, 15);
             this.label1.TabIndex = 1;
             this.label1.Text = "Messaggio da Inviare:";
-            
             // 
             // listBox1
             // 
-            this.listBox1.AccessibleName = "lista";
+            this.listBox1.AccessibleName = "listBox1";
             this.listBox1.FormattingEnabled = true;
             this.listBox1.ItemHeight = 15;
             this.listBox1.Location = new System.Drawing.Point(21, 89);
@@ -82,7 +83,12 @@
             this.label2.Size = new System.Drawing.Size(105, 15);
             this.label2.TabIndex = 4;
             this.label2.Text = "Messaggi Ricevuti:";
-            
+            // 
+            // timer1
+            // 
+            this.timer1.Enabled = true;
+            this.timer1.Interval = 1;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // Form1
             // 
@@ -109,5 +115,6 @@
         private ListBox listBox1;
         private Button button1;
         private Label label2;
+        private System.Windows.Forms.Timer timer1;
     }
 }
