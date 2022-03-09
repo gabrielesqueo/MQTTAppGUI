@@ -47,22 +47,28 @@ namespace MQTTAppGUI
 
         private void button1_Click(object sender, EventArgs e)
         {
-         
-            //Pubblicazione Messaggio
-            var applicationMessage = new MqttApplicationMessageBuilder()
-               .WithTopic("panetti/topic")
-               .WithPayload(textBox1.Text)
-               .Build();
+            if (textBox1.Text!=string.Empty)
+            {
+                //Pubblicazione Messaggio
+                var applicationMessage = new MqttApplicationMessageBuilder()
+                   .WithTopic("panetti/topic")
+                   .WithPayload(textBox1.Text)
+                   .Build();
 
-            _Client.PublishAsync(applicationMessage, CancellationToken.None);
-           
-            textBox1.ResetText();
+                _Client.PublishAsync(applicationMessage, CancellationToken.None);
+                
+                textBox1.ResetText();
+            }
+            else
+            {
+                MessageBox.Show("Testo vuoto");
+            }
+            
             
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-
             //Lettura Messaggi
             _Client.UseApplicationMessageReceivedHandler(e =>
             {
@@ -74,8 +80,8 @@ namespace MQTTAppGUI
                     {
                         string payload = Encoding.UTF8.GetString(e.ApplicationMessage.Payload);
                         //Da completare
-                        MessageBox.Show($"Topic: {topic}. Message Received: {payload}");
-                        
+                        string stampa = ($"Topic: {topic}. Message Received: {payload}");
+                        Stampa(stampa);
                     }
                 }
                 catch (Exception ex)
@@ -84,6 +90,20 @@ namespace MQTTAppGUI
                 }
             });
             
+        }
+        private void Stampa(string a)
+        {
+            try
+            {
+                listBox1.Invoke((MethodInvoker)delegate
+                {
+                    listBox1.Items.Add(a);
+                });
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.ToString());
+            }
         }
     }
 }
