@@ -1,0 +1,6 @@
+C:\Users\Gabriele\Desktop\App\MQTTAppGUI.exe
+C:\Users\Gabriele\Desktop\App\MQTTAppGUI.dll
+C:\Users\Gabriele\Desktop\App\MQTTAppGUI.deps.json
+C:\Users\Gabriele\Desktop\App\MQTTAppGUI.runtimeconfig.json
+C:\Users\Gabriele\Desktop\App\MQTTAppGUI.pdb
+C:\Users\Gabriele\Desktop\App\MQTTnet.dll
